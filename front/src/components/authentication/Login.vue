@@ -9,7 +9,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control" v-model="password" placeholder="Password">
                     </div>
-                    <button @click="test" type="submit" class="btn btn-success pull-right">Login</button>
+                    <button @click="login" type="submit" class="btn btn-success pull-right">Login</button>
                 </div>
             </div>
         </div>
@@ -28,12 +28,23 @@
             }
         },
         methods: {
-            test () {
-                //this.$http.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-                this.$http.get("http://127.0.0.1:8000/api/test")
-                        .then(function(response) {
+            login () {
+                var data = {
+                    client_id: 2,
+                    client_secret: 'nOTegApIEuA7nvsDEkdq4OR5J07MAq9JzcS0Q6wj',
+                    grant_type: 'password',
+                    username: this.email,
+                    password: this.password,
+                };
+
+                this.$http.post("http://127.0.0.1:8000/oauth/token", data)
+                //this.$http.get("http://127.0.0.1:8000/api/test")
+                        .then(response => {
                             console.log(response);
-                        })
+                        });
+                        /*.then(function(response) {
+                            console.log(response);
+                        })*/
             }
         }
     }
